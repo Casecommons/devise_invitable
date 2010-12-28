@@ -13,11 +13,17 @@ class Devise::InvitationsController < ApplicationController
 
   # POST /resource/invitation
   def create
-    self.resource = resource_class.invite!(params[resource_name])
+    self.resource = resource_class.find_by_email(params[resource_name][:email])
+    if resource.present?
+      self.resource.errors[:base] << "Account for this e-mail address already exists."
+      render "new" and return
+    else
+      resource = resource_class.invite!(params[resource_name])
+    end
 
     if resource.errors.empty?
-      set_flash_message :notice, :send_instructions, :email => self.resource.email
-      redirect_to after_sign_in_path_for(resource_name)
+      set_flash_message :notice, :send_instructions
+      redirect_to after_update_path_for(resource_name)
     else
       render_with_scope :new
     end
@@ -25,12 +31,9 @@ class Devise::InvitationsController < ApplicationController
 
   # GET /resource/invitation/accept?invitation_token=abcdef
   def edit
-    if params[:invitation_token] && self.resource = resource_class.first(:conditions => { :invitation_token => params[:invitation_token] })
-      render_with_scope :edit
-    else
-      set_flash_message(:alert, :invitation_token_invalid)
-      redirect_to after_sign_out_path_for(resource_name)
-    end
+    self.resource = resource_class.new
+    resource.invitation_token = params[:invitation_token]
+    render_with_scope :edit
   end
 
   # PUT /resource/invitation
