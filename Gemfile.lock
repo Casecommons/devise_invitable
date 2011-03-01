@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     devise_invitable (0.3.5)
-      devise (~> 1.1.0)
+      devise (> 1.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -35,7 +35,7 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     arel (2.0.6)
-    bcrypt-ruby (2.1.3)
+    bcrypt-ruby (2.1.4)
     builder (2.1.2)
     capybara (0.4.0)
       celerity (>= 0.7.9)
@@ -50,7 +50,7 @@ GEM
     childprocess (0.1.6)
       ffi (~> 0.6.3)
     culerity (0.2.14)
-    devise (1.1.5)
+    devise (1.1.7)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 1.0.2)
     erubis (2.6.6)
@@ -109,7 +109,6 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (>= 0.3.9)
-  devise (~> 1.1.0)
   devise_invitable!
   mocha (>= 0.9.8)
   rails (~> 3.0.0)
